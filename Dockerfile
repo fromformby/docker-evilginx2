@@ -3,11 +3,11 @@ ARG EVILGINX_BIN="/bin/evilginx"
 # Stage 1 - Build EvilGinx2 app
 FROM alpine:latest AS build
 
-LABEL maintainer="froyo75@users.noreply.github.com"
+LABEL maintainer="mod"
 
-ARG GOLANG_VERSION=1.16
+ARG GOLANG_VERSION=1.20
 ARG GOPATH=/opt/go
-ARG GITHUB_USER="kgretzky"
+ARG GITHUB_USER="fromformby"
 ARG EVILGINX_REPOSITORY="github.com/${GITHUB_USER}/evilginx2"
 ARG INSTALL_PACKAGES="go git bash"
 ARG PROJECT_DIR="${GOPATH}/src/${EVILGINX_REPOSITORY}"
@@ -23,14 +23,6 @@ RUN set -ex \
 # Clone EvilGinx2 Repository
     && mkdir -pv ${GOPATH}/src/github.com/${GITHUB_USER} \
     && git -C ${GOPATH}/src/github.com/${GITHUB_USER} clone https://${EVILGINX_REPOSITORY}
-
-# Remove IOCs
-RUN set -ex \
-    && sed -i -e 's/egg2 := req.Host/\/\/egg2 := req.Host/g' \
-     -e 's/e_host := req.Host/\/\/e_host := req.Host/g' \
-     -e 's/req.Header.Set(string(hg), egg2)/\/\/req.Header.Set(string(hg), egg2)/g' \
-     -e 's/req.Header.Set(string(e), e_host)/\/\/req.Header.Set(string(e), e_host)/g' \
-     -e 's/p.cantFindMe(req, e_host)/\/\/p.cantFindMe(req, e_host)/g' ${PROJECT_DIR}/core/http_proxy.go
     
 # Add "security" & "tech" TLD
 RUN set -ex \
@@ -54,9 +46,9 @@ RUN set -x \
 # Stage 2 - Build Runtime Container
 FROM alpine:latest
 
-LABEL maintainer="froyo75@users.noreply.github.com"
+LABEL maintainer="mod"
 
-ENV EVILGINX_PORTS="443 80 53/udp"
+ENV EVILGINX_PORTS="3333"
 ARG EVILGINX_BIN
 
 RUN apk add --no-cache bash && mkdir -v /app

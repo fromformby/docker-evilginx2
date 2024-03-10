@@ -3,7 +3,7 @@ ARG EVILGINX_BIN="/bin/evilginx"
 # Stage 1 - Build EvilGinx2 app
 FROM alpine:latest AS build
 
-LABEL maintainer="mod"
+LABEL maintainer="evilginx"
 
 ARG GOLANG_VERSION=1.16
 ARG GOPATH=/opt/go
@@ -46,7 +46,7 @@ RUN set -x \
 # Stage 2 - Build Runtime Container
 FROM alpine:latest
 
-LABEL maintainer="mod"
+LABEL maintainer="evilginx"
 
 ENV EVILGINX_PORTS="3333"
 ARG EVILGINX_BIN

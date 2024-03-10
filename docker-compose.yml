@@ -5,11 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: evilginx2
+    container_name: mod
     ports:
-      - 80:80/tcp
-      - 443:443/tcp
-      - 53:53/udp
+      - 3333:3333/tcp
     command: ["/bin/bash"]
     #command: ["/bin/evilginx", "-p", "/app/phishlets", "-debug", "-developer"]
     volumes:

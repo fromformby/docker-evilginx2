@@ -5,9 +5,9 @@ FROM alpine:latest AS build
 
 LABEL maintainer="mod"
 
-ARG GOLANG_VERSION=1.20
+ARG GOLANG_VERSION=1.16
 ARG GOPATH=/opt/go
-ARG GITHUB_USER="fromformby"
+ARG GITHUB_USER="kgretzky"
 ARG EVILGINX_REPOSITORY="github.com/${GITHUB_USER}/evilginx2"
 ARG INSTALL_PACKAGES="go git bash"
 ARG PROJECT_DIR="${GOPATH}/src/${EVILGINX_REPOSITORY}"
@@ -23,7 +23,7 @@ RUN set -ex \
 # Clone EvilGinx2 Repository
     && mkdir -pv ${GOPATH}/src/github.com/${GITHUB_USER} \
     && git -C ${GOPATH}/src/github.com/${GITHUB_USER} clone https://${EVILGINX_REPOSITORY}
-    
+
 # Add "security" & "tech" TLD
 RUN set -ex \
     && sed -i 's/arpa/tech\|security\|arpa/g' ${PROJECT_DIR}/core/http_proxy.go
